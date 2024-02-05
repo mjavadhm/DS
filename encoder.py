@@ -96,7 +96,36 @@ def main():
     queue = Queue()
     read_input(queue)
     tqueue = Queue()
-   
+    count = {}
+    for k in range(queue.size()):
+        i=0
+        dna = queue.dequeue()
+        while i < len(queen):
+            j=0
+            while j < len(worker):
+                if isok(dna=dna,queen=queen[i],worker=worker[j]):
+                    tqueue.enqueue(dna)
+                    for letter in dna:
+                        if letter in count:
+                            count[letter] += 1
+                        else:
+                            count[letter] = 1
+
+                    
+                    i,j = 200,200
+                else:
+                    j += 1
+            i += 1
+    letters = []
+    frequent = []
+    for letter, frequency in count.items():
+        letters.append(letter)
+        frequent.append(frequency)
+    
+    for k in range(len(letters)):
+        #dna = tqueue.dequeue()
+        print(f"{letters[k]}   -   {frequent[k]}\n-----")
+    
 
 
 main()
