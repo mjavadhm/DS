@@ -198,7 +198,7 @@ def main():
 
     huffman_codes = huffman_code(letters, frequent)
     compressed_dna = compress_text(tqueue, huffman_codes)
-    write_compressed_text(compressed_dna, 'compressed_file.bin')
+    write_compressed_text(compressed_dna, 'order.bin')
 
 
 if __name__ == '__main__':
