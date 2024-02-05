@@ -7,3 +7,10 @@ x
 b
 bcde
 b
+cd
+bcd
+bd
+ba
+bac
+ba
+bd
