@@ -33,18 +33,36 @@ def kmp(dna, worker):
     j = 0
     
     while i < len(worker):
-        return
+        if dna[j] == worker[i]:
+            i += 1
+            j += 1
+            
+            if j == len(dna):
+                return True
+        else:
+            if j != 0:
+                j = shekast[j-1]
+            else:
+                i += 1
+    
+    return False
 
 def fshekast(pat):
-    shekast = [-1] * len(pat)
-    #k = 0
-    j = 0
-
-    while j < len(pat):
-        k = 0
-        while k < j:
-            if pat[k] == pat[j]
-
+    shekast = [0] * len(pat)
+    length = 0
+    i = 1
+    
+    while i < len(pat):
+        if pat[i] == pat[length]:
+            length += 1
+            shekast[i] = length
+            i += 1
+        else:
+            if length != 0:
+                length = shekast[length-1]
+            else:
+                shekast[i] = 0
+                i += 1
     
     return shekast
 def read_parents():
@@ -78,5 +96,7 @@ def main():
     queue = Queue()
     read_input(queue)
     tqueue = Queue()
+   
+
 
 main()
