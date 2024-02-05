@@ -36,8 +36,12 @@ def decode_text(compressed_text, huffman_codes):
         current_code += bit
         for char, code in huffman_codes.items():
             if current_code == code:
-                decoded_text += char
-                current_code = ""
+                if char == 'ƒ':
+                    decoded_text += '\n'
+                    current_code = ""
+                else:
+                    decoded_text += char
+                    current_code = ""
 
     return decoded_text
 

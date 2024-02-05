@@ -152,7 +152,7 @@ def compress_text(queue, huffman_codes):
                 compressed_text += huffman_codes[char]
             else:
                compressed_text += char
-        compressed_text += huffman_codes['\n']
+        compressed_text += huffman_codes['ƒ']
 
     return compressed_text
 
@@ -194,7 +194,7 @@ def main():
                 else:
                     j += 1
             i += 1
-    count['\n'] = tqueue.size() - 1
+    count['ƒ'] = tqueue.size() - 1
     for letter, frequency in count.items():
         frequent,letters = binsert(frequent=frequent,fre=frequency,letter=letter,letters=letters)
     
