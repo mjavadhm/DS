@@ -106,6 +106,43 @@ def binsert(frequent, fre,letter,letters):
     letters.insert(low, letter)
     return frequent ,letters
 
+class Node:
+    def __init__(self, freq, letter=None, left=None, right=None):
+        self.freq = freq
+        self.letter = letter
+        self.left = left
+        self.right = right
+
+def huffman_code(letters, frequent):
+    nodes = []
+    for i in range(len(letters)):
+        node = Node(frequent[i], letters[i])
+        nodes.append(node)
+    
+    while len(nodes) > 1:
+        nodes.sort(key=lambda x: x.freq)
+        
+        left = nodes.pop(0)
+        right = nodes.pop(0)
+        
+        new_freq = left.freq + right.freq
+        new_node = Node(new_freq, left=left, right=right)
+        nodes.append(new_node)
+    
+    root = nodes[0]
+    codes = {}
+    
+    def find_codes(node, code):
+        if node.letter:
+            codes[node.letter] = code
+        else:
+            find_codes(node.left, code + '0')
+            find_codes(node.right, code + '1')
+    
+    find_codes(root, '')
+    
+    return codes
+
 
 def main():
     queen, worker = read_parents()
@@ -123,6 +160,7 @@ def main():
             j = 0
             while j < len(worker):
                 if isok(dna=dna, queen=queen[i], worker=worker[j]):
+                    print(f'{dna}\n--------')
                     tqueue.enqueue(dna)
                     for letter in dna:
                         if letter in count:
@@ -137,10 +175,14 @@ def main():
     
     for letter, frequency in count.items():
         frequent,letters = binsert(frequent=frequent,fre=frequency,letter=letter,letters=letters)
-
-    #for k in range(len(letters)):
-        #print(f"{k}      -      {letters[k]}   -   {frequent[k]}\n-----")
     
+    for k in range(len(letters)):
+        print('Letter:', letters[k], 'frequent:', frequent[k])
 
 
-main()
+    huffman_codes = huffman_code(letters, frequent)
+
+
+
+if __name__ == '__main__':
+    main()
