@@ -152,12 +152,18 @@ def compress_text(queue, huffman_codes):
                 compressed_text += huffman_codes[char]
             else:
                compressed_text += char
+        compressed_text += huffman_codes['\n']
 
     return compressed_text
 
 def write_compressed_text(compressed_text, output_file):
     with open(output_file, 'wb') as file:
         file.write(int(compressed_text, 2).to_bytes((len(compressed_text) + 7) // 8, byteorder='big'))
+
+def savekey(huffman_codes):
+    with open('huffman_key.txt', 'w') as file:
+        for char, code in huffman_codes.items():
+            file.write(f"{char}:{code}\n")
 
 
 def main():
@@ -188,17 +194,17 @@ def main():
                 else:
                     j += 1
             i += 1
-    
+    count['\n'] = tqueue.size() - 1
     for letter, frequency in count.items():
         frequent,letters = binsert(frequent=frequent,fre=frequency,letter=letter,letters=letters)
     
     for k in range(len(letters)):
         print('Letter:', letters[k], 'frequent:', frequent[k])
 
-
     huffman_codes = huffman_code(letters, frequent)
+    savekey(huffman_codes)
     compressed_dna = compress_text(tqueue, huffman_codes)
-    write_compressed_text(compressed_dna, 'order.bin')
+    write_compressed_text(compressed_dna, 'compressed_file.bin')
 
 
 if __name__ == '__main__':
