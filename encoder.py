@@ -13,10 +13,18 @@ class Queue:
 
 def isok(dna,queen,worker):
     if dna[0]==queen[0]:
-        if kmp(dna=dna,worker=worker):
+        if len(dna) == 1:
             return True
+        else:
+            cdna = dna[1:]
+        
+            if kmp(dna=cdna,worker=worker):
+                return True        
+            else:
+                return False
     else:
         return False
+    
 def kmp(dna, worker):
     shekast = fshekast(dna)
     i = 0
@@ -37,4 +45,3 @@ def fshekast(pat):
 
     
     return shekast
-
