@@ -91,40 +91,55 @@ def read_input(queue):
             dna = line.strip()
             queue.enqueue(dna)
 
+def binsert(frequent, fre,letter,letters):
+    low = 0
+    high = len(frequent) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+        if frequent[mid] < fre:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    frequent.insert(low, fre)
+    letters.insert(low, letter)
+    return frequent ,letters
+
+
 def main():
     queen, worker = read_parents()
     queue = Queue()
     read_input(queue)
     tqueue = Queue()
     count = {}
+    letters = []
+    frequent = []
+    
     for k in range(queue.size()):
-        i=0
+        i = 0
         dna = queue.dequeue()
         while i < len(queen):
-            j=0
+            j = 0
             while j < len(worker):
-                if isok(dna=dna,queen=queen[i],worker=worker[j]):
+                if isok(dna=dna, queen=queen[i], worker=worker[j]):
                     tqueue.enqueue(dna)
                     for letter in dna:
                         if letter in count:
                             count[letter] += 1
                         else:
                             count[letter] = 1
-
                     
-                    i,j = 200,200
+                    i, j = 200, 200
                 else:
                     j += 1
             i += 1
-    letters = []
-    frequent = []
-    for letter, frequency in count.items():
-        letters.append(letter)
-        frequent.append(frequency)
     
-    for k in range(len(letters)):
-        #dna = tqueue.dequeue()
-        print(f"{letters[k]}   -   {frequent[k]}\n-----")
+    for letter, frequency in count.items():
+        frequent,letters = binsert(frequent=frequent,fre=frequency,letter=letter,letters=letters)
+
+    #for k in range(len(letters)):
+        #print(f"{k}      -      {letters[k]}   -   {frequent[k]}\n-----")
     
 
 
