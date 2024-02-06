@@ -106,6 +106,15 @@ def binsert(frequent, fre,letter,letters):
     letters.insert(low, letter)
     return frequent ,letters
 
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x.freq < pivot.freq]
+    middle = [x for x in arr if x.freq == pivot.freq]
+    right = [x for x in arr if x.freq > pivot.freq]
+    return quicksort(left) + middle + quicksort(right)
+
 class Node:
     def __init__(self, freq, letter=None, left=None, right=None):
         self.freq = freq
@@ -120,7 +129,7 @@ def huffman_code(letters, frequent):
         nodes.append(node)
     
     while len(nodes) > 1:
-        nodes.sort(key=lambda x: x.freq)
+        nodes = quicksort(nodes)
         
         left = nodes.pop(0)
         right = nodes.pop(0)
@@ -148,11 +157,9 @@ def compress_text(queue, huffman_codes):
     while not queue.is_empty():
         dna = queue.dequeue()
         for char in dna:
-            if char in huffman_codes:
-                compressed_text += huffman_codes[char]
-            else:
-               compressed_text += char
-        compressed_text += huffman_codes['ƒ']
+            compressed_text += huffman_codes[char]
+        if queue.size() > 1:
+            compressed_text += huffman_codes['ƒ']
 
     return compressed_text
 

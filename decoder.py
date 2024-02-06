@@ -1,18 +1,3 @@
-class Queue:
-    def __init__(self):
-        self.ants = []
- 
-    def is_empty(self):
-        return self.ants == []
- 
-    def enqueue(self, data):
-        self.ants.append(data)
- 
-    def dequeue(self):
-        return self.ants.pop(0)
-    def size(self):
-        return len(self.ants)
-
 def read_huffman_codes(file_path):
     huffman_codes = {}
     with open(file_path, 'r') as file:
